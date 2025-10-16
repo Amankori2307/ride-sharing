@@ -1,4 +1,4 @@
-import { ErrorCodesEnum } from "../enum";
+import { ErrorCodesEnum } from "../enums";
 import { Driver } from "./driver.class";
 import { Ride } from "./ride.class";
 import { Rider } from "./rider.class";
@@ -93,7 +93,8 @@ export class RideSharingApp {
     const rider = this.getRider(riderId);
     if (!rider) return;
 
-    const newRide = driver.startRide(rideId, driver, rider);
+    const newRide = new Ride(rideId, driver, rider);
+    driver.markUnAvailable;
     this.rideMap.set(rideId, newRide);
     console.log(`RIDE_STARTED ${rideId}`);
   }
@@ -102,7 +103,7 @@ export class RideSharingApp {
     rideId: string,
     destinationX: number,
     destinationY: number,
-    timeTaken: number
+    timeTakenInMins: number
   ) {
     const ride = this.rideMap.get(rideId);
     if (!ride) {
@@ -110,7 +111,7 @@ export class RideSharingApp {
       return;
     }
 
-    ride.stopRide(destinationX, destinationY, timeTaken);
+    ride.stopRide(destinationX, destinationY, timeTakenInMins);
     console.log(`RIDE_STOPPED ${rideId}`);
   }
 

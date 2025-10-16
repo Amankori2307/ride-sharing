@@ -1,19 +1,15 @@
 import fs from "fs";
 import { RideSharingApp } from "./classes/ride-sharing-app.class";
-import { CommandsEnum } from "./enum/index";
-// const filename = process.argv[2];
-const filename = "input/sample-input2.txt";
+import { CommandsEnum } from "./enums/index";
+const filename = process.argv[2];
 
-const data = fs.readFileSync(filename, "utf-8");
-data.trim();
+const data = fs.readFileSync(filename, "utf-8").trim();
 
 const commands = data.split("\n");
 
 const app = new RideSharingApp();
 for (const commandLine of commands) {
-  commandLine.trim();
-  const [command, ...args] = commandLine.split(" ");
-  command.trim();
+  const [command, ...args] = commandLine.trim().split(" ");
 
   switch (command) {
     case CommandsEnum.ADD_DRIVER: {
@@ -37,12 +33,12 @@ for (const commandLine of commands) {
       break;
     }
     case CommandsEnum.STOP_RIDE: {
-      const [rideId, destinationX, destinationY, timeTaken] = args;
+      const [rideId, destinationX, destinationY, timeTakenInMins] = args;
       app.stopRide(
         rideId,
         Number(destinationX),
         Number(destinationY),
-        Number(timeTaken)
+        Number(timeTakenInMins)
       );
       break;
     }

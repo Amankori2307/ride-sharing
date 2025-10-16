@@ -1,0 +1,4 @@
+const BASE_FARE = 50;
+const PER_KM_CHARGES = 6.5;
+const PER_MIN_CHARGES = 2;
+const TAX_PERCENTAGE = 20;

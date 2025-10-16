@@ -1,5 +1,5 @@
 import { ILocation } from "../interfaces";
-import { calculateDistance, parseNumber } from "../utils/common.utils";
+import { calculateDistance, parseNumber } from "../utils";
 import { Driver } from "./driver.class";
 import { Rider } from "./rider.class";
 
@@ -8,7 +8,7 @@ export class Ride {
   private _driver: Driver;
   private _rider: Rider;
   private _destination: ILocation | null = null;
-  private _timeTaken: number = 0;
+  private _timeTakenInMins: number = 0;
 
   get driver() {
     return this._driver;
@@ -20,12 +20,12 @@ export class Ride {
     this._rider = rider;
   }
 
-  stopRide(destinationX: number, destinationY: number, timeTaken: number) {
+  stopRide(destinationX: number, destinationY: number, timeTakenInMins: number) {
     this._destination = {
       x: destinationX,
       y: destinationY,
     };
-    this._timeTaken = timeTaken;
+    this._timeTakenInMins = timeTakenInMins;
     this._driver.markAvailable();
   }
 
@@ -33,7 +33,7 @@ export class Ride {
     return !!this._destination;
   }
 
-  calcDistance() {
+  calcDistanceInKm() {
     if (!this._destination) return 0;
 
     const { x: x1, y: y1 } = this._destination;
@@ -44,12 +44,12 @@ export class Ride {
   }
 
   generateBill() {
-    const baseFare = 50;
+    const baseFare = BASE_FARE;
 
-    const distance = this.calcDistance();
-    const distanceCharges = parseNumber(distance * 6.5);
+    const distanceInKm = this.calcDistanceInKm();
+    const distanceCharges = parseNumber(distanceInKm * PER_KM_CHARGES);
 
-    const timeCharges = parseNumber(this._timeTaken * 2);
+    const timeCharges = parseNumber(this._timeTakenInMins * PER_MIN_CHARGES);
 
     const preTaxTotal = baseFare + distanceCharges + timeCharges;
     const tax = parseNumber(0.2 * preTaxTotal);

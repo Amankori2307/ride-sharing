@@ -1,4 +1,4 @@
-import { calculateDistance } from "../utils/common.utils";
+import { calculateDistance } from "../utils";
 import { BaseUser } from "./base-user.class";
 import { Ride } from "./ride.class";
 import { Rider } from "./rider.class";
@@ -13,16 +13,14 @@ export class Driver extends BaseUser {
   calcDistance(rider: Rider) {
     const { x: x1, y: y1 } = this._location;
     const { x: x2, y: y2 } = rider.location;
-    return calculateDistance(x1, y2, x2, y2);
-  }
-
-  startRide(rideId: string, driver: Driver, rider: Rider) {
-    const ride = new Ride(rideId, driver, rider);
-    driver._isAvailable = false;
-    return ride;
+    return calculateDistance(x1, y1, x2, y2);
   }
 
   markAvailable() {
     this._isAvailable = true;
+  }
+
+  markUnAvailable() {
+    this._isAvailable = false;
   }
 }
