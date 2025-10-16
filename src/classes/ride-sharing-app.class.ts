@@ -1,3 +1,4 @@
+import { ErrorCodesEnum } from "../enum";
 import { Driver } from "./driver.class";
 import { Ride } from "./ride.class";
 import { Rider } from "./rider.class";
